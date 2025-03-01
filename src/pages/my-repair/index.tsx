@@ -7,38 +7,77 @@ import {
 } from 'antd';
 import { useRef, useState } from 'react';
 
-import { $2_page, $2_remove } from '@/api/$2';
+import { repair_pageCurrent, repair_remove } from '@/api/repair';
 import LinkButton from '@/components/link-button';
 import FProTable from '@/components/pro-table';
 import { antdUtils } from '@/utils/antd';
 import { toPageRequestParams } from '@/utils/utils';
 import { PlusOutlined } from '@ant-design/icons';
 import { ActionType, ProColumnType } from '@ant-design/pro-components';
-import NewAndEditForm from './new-edit-form';
+import NewAndEditRepairForm from './new-edit-form';
 
-function $1Page() {
-  const [editData, setEditData] = useState<API.$1VO | null>(null);
-  const [formOpen, setFormOpen] = useState(false);
+function RepairPage() {
   const actionRef = useRef<ActionType>();
 
-  const columns: ProColumnType<API.$1VO>[] = [
+  const [formOpen, setFormOpen] = useState(false);
+  const [editData, setEditData] = useState<API.RepairVO | null>(null);
+  const openForm = () => {
+    setFormOpen(true);
+  };
+
+  const closeForm = () => {
+    setFormOpen(false);
+    setEditData(null);
+  };
+
+  const saveHandle = () => {
+    actionRef.current?.reload();
+    setFormOpen(false);
+    setEditData(null);
+  };
+
+  const columns: ProColumnType<API.RepairVO>[] = [
     {
-      title: t("qvtQYcfN" /* 名称 */),
-      dataIndex: 'name',
+      dataIndex: 'hostel',
+      title: '宿舍',
+      renderText(_, record) {
+        return [record.hostel?.building, record.hostel?.number].join('#');
+      },
+      search: false,
     },
     {
-      title: t("WIRfoXjK" /* 代码 */),
-      dataIndex: 'code',
-      valueType: 'text',
+      dataIndex: ['repair', 'fullName'],
+      title: '报修人',
+      search: false,
+    },
+    {
+      dataIndex: 'repairRemark',
+      title: '报修内容',
+      search: false,
+    },
+    {
+      dataIndex: 'status',
+      title: '状态',
+      valueType: 'select',
+      valueEnum: {
+        0: {
+          text: "未处理",
+          status: 'Default',
+        },
+        1: {
+          text: "已处理",
+          status: 'Success',
+        },
+      },
     },
     {
       title: t("QkOmYwne" /* 操作 */),
       dataIndex: 'id',
       hideInForm: true,
-      width: 240,
+      width: 200,
       align: 'center',
       search: false,
-      renderText: (id: string, record) => (
+      renderText: (id: string, record) => record.status === 0 ? (
         <Space
           split={(
             <Divider type='vertical' />
@@ -55,45 +94,30 @@ function $1Page() {
           <Popconfirm
             title={t("RCCSKHGu" /* 确认删除？ */)}
             onConfirm={async () => {
-              await $2_remove({ id });
+              await repair_remove({ id });
               antdUtils.message?.success(t("CVAhpQHp" /* 删除成功! */));
               actionRef.current?.reload();
             }}
             placement="topRight"
           >
-            <LinkButton
-            >
+            <LinkButton>
               {t("HJYhipnp" /* 删除 */)}
             </LinkButton>
           </Popconfirm>
         </Space>
-      ),
+      ) : <></>,
     },
   ];
 
-
-  const openForm = () => {
-    setFormOpen(true);
-  };
-
-  const closeForm = () => {
-    setFormOpen(false);
-    setEditData(null);
-  };
-
-  const saveHandle = () => {
-    actionRef.current?.reload();
-    setFormOpen(false);
-    setEditData(null);
-  };
-
   return (
     <>
-      <FProTable<API.$1VO, Omit<API.$1VO, 'id'>>
+      <FProTable<API.RepairVO, Omit<API.RepairVO, 'id'>>
         actionRef={actionRef}
         columns={columns}
         request={async params => {
-          return $2_page(toPageRequestParams(params));
+          return repair_pageCurrent(
+            toPageRequestParams(params)
+          );
         }}
         headerTitle={(
           <Space>
@@ -107,7 +131,7 @@ function $1Page() {
           </Space>
         )}
       />
-      <NewAndEditForm
+      <NewAndEditRepairForm
         onOpenChange={open => !open && closeForm()}
         editData={editData}
         onSaveSuccess={saveHandle}
@@ -118,4 +142,4 @@ function $1Page() {
   );
 }
 
-export default $1Page;
+export default RepairPage;

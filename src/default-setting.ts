@@ -6,7 +6,7 @@ export const defaultSetting = {
   "filterType": "light",
   "showFormType": "modal",
   "showKeepAliveTab": true,
-  "title": "fluxy-admin",
+  "title": "宿舍管理系统",
   "headerHeight": 80,
   "slideWidth": 240,
   "collapsedSlideWidth": 112,

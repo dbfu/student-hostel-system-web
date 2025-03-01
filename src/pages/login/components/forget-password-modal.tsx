@@ -32,12 +32,10 @@ const ForgetPasswordModal = ({ open, setOpen }: Props) => {
       return;
     }
 
-    const [error] = await sendResetPasswordEmail({ checkEmail });
+    await sendResetPasswordEmail({ checkEmail });
 
-    if (!error) {
-      antdUtils.message.success('邮件已发送，请到邮箱查看。');
-      setOpen(false);
-    }
+    antdUtils.message.success('邮件已发送，请到邮箱查看。');
+    setOpen(false);
   }
 
 

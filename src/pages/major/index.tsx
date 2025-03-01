@@ -7,35 +7,50 @@ import {
 } from 'antd';
 import { useRef, useState } from 'react';
 
-import { $2_page, $2_remove } from '@/api/$2';
+import { major_page, major_remove } from '@/api/major';
 import LinkButton from '@/components/link-button';
 import FProTable from '@/components/pro-table';
 import { antdUtils } from '@/utils/antd';
 import { toPageRequestParams } from '@/utils/utils';
 import { PlusOutlined } from '@ant-design/icons';
 import { ActionType, ProColumnType } from '@ant-design/pro-components';
-import NewAndEditForm from './new-edit-form';
+import NewAndEditMajorForm from './new-edit-form';
 
-function $1Page() {
-  const [editData, setEditData] = useState<API.$1VO | null>(null);
-  const [formOpen, setFormOpen] = useState(false);
+function MajorPage() {
   const actionRef = useRef<ActionType>();
 
-  const columns: ProColumnType<API.$1VO>[] = [
+  const [formOpen, setFormOpen] = useState(false);
+  const [editData, setEditData] = useState<API.MajorVO | null>(null);
+  const openForm = () => {
+    setFormOpen(true);
+  };
+
+  const closeForm = () => {
+    setFormOpen(false);
+    setEditData(null);
+  };
+
+  const saveHandle = () => {
+    actionRef.current?.reload();
+    setFormOpen(false);
+    setEditData(null);
+  };
+
+  const columns: ProColumnType<API.MajorVO>[] = [
     {
-      title: t("qvtQYcfN" /* 名称 */),
       dataIndex: 'name',
+      title: '专业名称',
     },
     {
-      title: t("WIRfoXjK" /* 代码 */),
-      dataIndex: 'code',
-      valueType: 'text',
+      dataIndex: 'classCount',
+      title: '班级数量',
+      hideInSearch: true,
     },
     {
       title: t("QkOmYwne" /* 操作 */),
       dataIndex: 'id',
       hideInForm: true,
-      width: 240,
+      width: 200,
       align: 'center',
       search: false,
       renderText: (id: string, record) => (
@@ -55,14 +70,14 @@ function $1Page() {
           <Popconfirm
             title={t("RCCSKHGu" /* 确认删除？ */)}
             onConfirm={async () => {
-              await $2_remove({ id });
+              console.log(id, 'id')
+              await major_remove({ id });
               antdUtils.message?.success(t("CVAhpQHp" /* 删除成功! */));
               actionRef.current?.reload();
             }}
             placement="topRight"
           >
-            <LinkButton
-            >
+            <LinkButton>
               {t("HJYhipnp" /* 删除 */)}
             </LinkButton>
           </Popconfirm>
@@ -71,29 +86,13 @@ function $1Page() {
     },
   ];
 
-
-  const openForm = () => {
-    setFormOpen(true);
-  };
-
-  const closeForm = () => {
-    setFormOpen(false);
-    setEditData(null);
-  };
-
-  const saveHandle = () => {
-    actionRef.current?.reload();
-    setFormOpen(false);
-    setEditData(null);
-  };
-
   return (
     <>
-      <FProTable<API.$1VO, Omit<API.$1VO, 'id'>>
+      <FProTable<API.MajorVO, Omit<API.MajorVO, 'id'>>
         actionRef={actionRef}
         columns={columns}
         request={async params => {
-          return $2_page(toPageRequestParams(params));
+          return major_page(toPageRequestParams(params));
         }}
         headerTitle={(
           <Space>
@@ -107,7 +106,7 @@ function $1Page() {
           </Space>
         )}
       />
-      <NewAndEditForm
+      <NewAndEditMajorForm
         onOpenChange={open => !open && closeForm()}
         editData={editData}
         onSaveSuccess={saveHandle}
@@ -118,4 +117,4 @@ function $1Page() {
   );
 }
 
-export default $1Page;
+export default MajorPage;

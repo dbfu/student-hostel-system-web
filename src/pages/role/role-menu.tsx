@@ -120,14 +120,12 @@ function RoleMenu({
     if (!roleId) return;
 
     setSaveLoading(true);
-    const [error] = await role_allocMenu({ menuIds: checkedKeys, roleId })
+    await role_allocMenu({ menuIds: checkedKeys, roleId })
 
     setSaveLoading(false);
 
-    if (!error) {
-      antdUtils.message?.success(t("koENLxye" /* 分配成功 */));
-      onCancel();
-    }
+    antdUtils.message?.success(t("koENLxye" /* 分配成功 */));
+    onCancel();
   };
 
   useEffect(() => {

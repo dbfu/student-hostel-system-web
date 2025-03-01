@@ -180,6 +180,19 @@ declare namespace API {
     menus?: MenuVO[];
   };
 
+  type DashboardDataVO = {
+    /** 学生数量 */
+    studentCount?: number;
+    /** 班级数量 */
+    classCount?: number;
+    /** 待维修数量 */
+    toRepairCount?: number;
+    /** 床位数量 */
+    bedCount?: number;
+    /** 每个楼栋的学生数量 */
+    studentCountByBuilding?: StudentCountByBuilding[];
+  };
+
   type FileEntity = {
     /** id */
     id?: string;
@@ -195,6 +208,89 @@ declare namespace API {
     pkName?: string;
     /** 外健值 */
     pkValue?: string;
+  };
+
+  type HostelDTO = {
+    id?: string;
+    /** 门牌号 */
+    number?: string;
+    /** 栋号 */
+    building?: string;
+    /** 楼层 */
+    floor?: string;
+    /** 床位数量 */
+    bedCount?: number;
+  };
+
+  type hostelGetByIdParams = {
+    id: string;
+  };
+
+  type hostelListParams = {
+    /** 页码 */
+    page?: number;
+    /** 每页数量 */
+    size?: number;
+    /** 门牌号 */
+    number?: string;
+    /** 栋号 */
+    building?: string;
+    /** 楼层 */
+    floor?: string;
+  };
+
+  type HostelPageDTO = {
+    /** 页码 */
+    page?: number;
+    /** 每页数量 */
+    size?: number;
+    /** 门牌号 */
+    number?: string;
+    /** 栋号 */
+    building?: string;
+    /** 楼层 */
+    floor?: string;
+  };
+
+  type hostelPageParams = {
+    /** 页码 */
+    page?: number;
+    /** 每页数量 */
+    size?: number;
+    /** 门牌号 */
+    number?: string;
+    /** 栋号 */
+    building?: string;
+    /** 楼层 */
+    floor?: string;
+  };
+
+  type HostelPageVO = {
+    /** 数据 */
+    data?: HostelVO[];
+    /** 总条数 */
+    total?: number;
+  };
+
+  type hostelRemoveParams = {
+    id: string;
+  };
+
+  type HostelVO = {
+    /** id */
+    id?: string;
+    /** 创建时间 */
+    createDate?: string;
+    /** 更新时间 */
+    updateDate?: string;
+    /** 门牌号 */
+    number?: string;
+    /** 栋号 */
+    building?: string;
+    /** 楼层 */
+    floor?: string;
+    /** 床位数量 */
+    bedCount?: number;
   };
 
   type LoginDTO = {
@@ -263,6 +359,65 @@ declare namespace API {
     status?: boolean;
     /** 登录消息 */
     message?: string;
+  };
+
+  type MajorDTO = {
+    id?: string;
+    /** 专业名称 */
+    name?: string;
+    /** 班级数量 */
+    classCount?: number;
+  };
+
+  type majorListParams = {
+    /** 页码 */
+    page?: number;
+    /** 每页数量 */
+    size?: number;
+    /** 专业名称 */
+    name?: string;
+  };
+
+  type MajorPageDTO = {
+    /** 页码 */
+    page?: number;
+    /** 每页数量 */
+    size?: number;
+    /** 专业名称 */
+    name?: string;
+  };
+
+  type majorPageParams = {
+    /** 页码 */
+    page?: number;
+    /** 每页数量 */
+    size?: number;
+    /** 专业名称 */
+    name?: string;
+  };
+
+  type MajorPageVO = {
+    /** 数据 */
+    data?: MajorVO[];
+    /** 总条数 */
+    total?: number;
+  };
+
+  type majorRemoveParams = {
+    id: string;
+  };
+
+  type MajorVO = {
+    /** id */
+    id?: string;
+    /** 创建时间 */
+    createDate?: string;
+    /** 更新时间 */
+    updateDate?: string;
+    /** 专业名称 */
+    name?: string;
+    /** 班级数量 */
+    classCount?: number;
   };
 
   type MenuApiEntity = {
@@ -417,6 +572,93 @@ declare namespace API {
     refreshToken?: string;
   };
 
+  type RepairDTO = {
+    id?: string;
+    /** 宿舍id */
+    hostelId?: string;
+    /** 报修人id */
+    repairId?: string;
+    /** 报修内容 */
+    repairRemark?: string;
+    /** 状态，0 未处理，1 已处理 */
+    status?: number;
+  };
+
+  type repairGetByIdParams = {
+    id: string;
+  };
+
+  type repairPageCurrentParams = {
+    /** 页码 */
+    page?: number;
+    /** 每页数量 */
+    size?: number;
+    /** 宿舍号 */
+    hostelNumber?: string;
+    /** 报修人姓名 */
+    repairName?: string;
+    /** 报修状态 */
+    status?: number;
+  };
+
+  type RepairPageDTO = {
+    /** 页码 */
+    page?: number;
+    /** 每页数量 */
+    size?: number;
+    /** 宿舍号 */
+    hostelNumber?: string;
+    /** 报修人姓名 */
+    repairName?: string;
+    /** 报修状态 */
+    status?: number;
+  };
+
+  type repairPageParams = {
+    /** 页码 */
+    page?: number;
+    /** 每页数量 */
+    size?: number;
+    /** 宿舍号 */
+    hostelNumber?: string;
+    /** 报修人姓名 */
+    repairName?: string;
+    /** 报修状态 */
+    status?: number;
+  };
+
+  type RepairPageVO = {
+    /** 数据 */
+    data?: RepairVO[];
+    /** 总条数 */
+    total?: number;
+  };
+
+  type repairRemoveParams = {
+    id: string;
+  };
+
+  type RepairVO = {
+    /** id */
+    id?: string;
+    /** 创建时间 */
+    createDate?: string;
+    /** 更新时间 */
+    updateDate?: string;
+    /** 宿舍id */
+    hostelId?: string;
+    /** 报修人id */
+    repairId?: string;
+    /** 报修内容 */
+    repairRemark?: string;
+    /** 状态，0 未处理，1 已处理 */
+    status?: number;
+    /** 报修人 */
+    repair?: StudentVO;
+    /** 宿舍 */
+    hostel?: HostelVO;
+  };
+
   type ResetPasswordDTO = {
     /** 密码 */
     password?: string;
@@ -511,6 +753,105 @@ declare namespace API {
     name?: string;
     /** 代码 */
     code?: string;
+  };
+
+  type StudentCountByBuilding = {
+    /** 楼栋 */
+    building?: string;
+    /** 学生数量 */
+    count?: number;
+  };
+
+  type StudentDTO = {
+    id?: string;
+    /** 姓名 */
+    fullName?: string;
+    /** 性别 */
+    sex?: number;
+    /** 专业 */
+    majorId?: string;
+    /** 班级 */
+    classNum?: string;
+    /** 手机号 */
+    phoneNumber?: string;
+    /** 入学时间 */
+    enrolDate?: string;
+    /** 宿舍id */
+    hostelId?: string;
+    /** 床位 */
+    bedNum?: number;
+    /** 邮箱 */
+    email?: number;
+    /** 学号 */
+    code?: string;
+  };
+
+  type studentGetByIdParams = {
+    id: string;
+  };
+
+  type StudentPageDTO = {
+    /** 页码 */
+    page?: number;
+    /** 每页数量 */
+    size?: number;
+    /** 姓名 */
+    fullName?: string;
+    /** 学号 */
+    code?: string;
+  };
+
+  type studentPageParams = {
+    /** 页码 */
+    page?: number;
+    /** 每页数量 */
+    size?: number;
+    /** 姓名 */
+    fullName?: string;
+    /** 学号 */
+    code?: string;
+  };
+
+  type StudentPageVO = {
+    /** 数据 */
+    data?: StudentVO[];
+    /** 总条数 */
+    total?: number;
+  };
+
+  type studentRemoveParams = {
+    id: string;
+  };
+
+  type StudentVO = {
+    /** id */
+    id?: string;
+    /** 创建时间 */
+    createDate?: string;
+    /** 更新时间 */
+    updateDate?: string;
+    /** 姓名 */
+    fullName?: string;
+    /** 性别 */
+    sex?: number;
+    /** 专业id */
+    majorId?: string;
+    /** 班级 */
+    classNum?: string;
+    /** 手机号 */
+    phoneNumber?: string;
+    /** 入学时间 */
+    enrolDate?: string;
+    /** 宿舍id */
+    hostelId?: string;
+    /** 床位 */
+    bedNum?: number;
+    /** 邮箱 */
+    email?: string;
+    /** 专业 */
+    major?: any;
+    /** 宿舍 */
+    hostel?: any;
   };
 
   type TokenVO = {

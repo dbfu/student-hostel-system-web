@@ -107,11 +107,9 @@ function UserPage() {
             title={t('JjwFfqHG' /* 警告 */)}
             description={t('nlZBTfzL' /* 确认删除这条数据？ */)}
             onConfirm={async () => {
-              const [error] = await deleteUser({ id: record.id! });
-              if (!error) {
-                antdUtils.message.success(t('bvwOSeoJ' /* 删除成功！ */));
-                actionRef.current?.reload();
-              }
+              await deleteUser({ id: record.id! });
+              antdUtils.message.success(t('bvwOSeoJ' /* 删除成功！ */));
+              actionRef.current?.reload();
             }}
           >
             <LinkButton>{t('HJYhipnp' /* 删除 */)}</LinkButton>

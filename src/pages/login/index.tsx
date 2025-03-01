@@ -1,5 +1,4 @@
 import { IconBuguang } from '@/assets/icons/buguang';
-import { t } from '@/utils/i18n';
 
 import { defaultSetting } from '@/default-setting';
 import { useState } from 'react';
@@ -24,7 +23,7 @@ function Login() {
             <h3
               className='dark:text-white text-[rgba(0,0,0,.45)] mb-[1em] text-[16px] font-normal'
             >
-              {t("wbTMzvDM" /* 一个高颜值后台管理系统 */)}
+              学生宿舍管理系统
             </h3>
           </div>
           <LoginForm onForgetPasswordClick={() => { setEmailResetPasswordOpen(true) }} />
